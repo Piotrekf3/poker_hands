@@ -1,0 +1,48 @@
+---
+title: "PokerHand"
+author: "Piotr Furmankiewicz, Marcin Staszak"
+date: "9 12 2019"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r load_data}
+mydata = read.csv("training.data")
+colnames(mydata) <- c("S1", "C1", "S2", "C2", "S3", "C3", "S4", "C4", "S5", "C5", "CLASS")
+head(mydata, 10)
+```
+
+```{r class}
+class_probability = mydata %>%
+  group_by(CLASS) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n))
+class_probability$CLASS = as.factor(c("0: Nothing in hand; not a recognized poker hand",
+                                      "1: One pair; one pair of equal ranks within five cards",
+                                      "2: Two pairs; two pairs of equal ranks within five cards",
+                                      "3: Three of a kind; three equal ranks within five cards",
+                                      "4: Straight; five cards, sequentially ranked with no gaps",
+                                      "5: Flush; five cards with the same suit",
+                                      "6: Full house; pair + different rank three of a kind",
+                                      "7: Four of a kind; four equal ranks within five cards",
+                                      "8: Straight flush; straight + flush",
+                                      "9: Royal flush; {Ace, King, Queen, Jack, Ten} + flush"))
+class_probability
+  
+ggplot(class_probability, aes(x = "", y = freq, fill = CLASS)) +
+  geom_bar(width = 1, stat = "identity", color = "white") +
+  coord_polar("y", start = 0)+
+  theme_void()
+```
+
+```{r}
+```
+
+
+
