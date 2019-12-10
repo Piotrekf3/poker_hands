@@ -22,7 +22,8 @@ head(mydata, 10)
 class_probability = mydata %>%
   group_by(CLASS) %>%
   summarise(n = n()) %>%
-  mutate(freq = n / sum(n))
+  mutate(freq = round(n / sum(n), 6), CLASS=c(0,1,2,3,4,5,6,7,8,9))
+class_probability
 class_probability$CLASS = as.factor(c("0: Nothing in hand; not a recognized poker hand",
                                       "1: One pair; one pair of equal ranks within five cards",
                                       "2: Two pairs; two pairs of equal ranks within five cards",
