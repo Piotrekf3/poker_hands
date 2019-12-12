@@ -15,7 +15,9 @@ shinyUI(dashboardPage(
     dashboardHeader(title = "Poker Hands"),
     dashboardSidebar(
         sidebarMenu(
-            menuItem("Class probability", tabName = "classProbability", icon = icon("chart-pie"))
+            menuItem("Class probability", tabName = "classProbability", icon = icon("chart-pie")),
+            menuItem("Card value", tabName = "cardValue", icon = icon("draft2digital")),
+            menuItem("SuitCount", tabName = "suitCount", icon = icon("heart"))
             
         )
     ),
@@ -48,6 +50,22 @@ shinyUI(dashboardPage(
                                                           0, 1, 2, 3, 4, 5, 6, 7, 8, 9
                                                       )
                                             ))
+                    )
+            ),
+            tabItem(tabName = "cardValue",
+                    fluidRow(
+                        box(width = 12, h1("Mean of card value"))
+                    ),
+                    fluidRow(
+                        box(width = 12, plotOutput("cardValue", height = 550))
+                    )
+            ),
+            tabItem(tabName = "suitCount",
+                    fluidRow(
+                        box(width = 12, h1("Suits count"))
+                    ),
+                    fluidRow(
+                        box(width = 12, plotOutput("suitsCount", height = 550))
                     )
             )
         )

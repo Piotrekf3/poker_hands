@@ -22,12 +22,11 @@ getValue <- function(keys, values) {
     return(result)
 }
 
-# Define server logic required to draw a histogram
 shinyServer(function(input, output) {
     mydata = read.csv("training.data")
     colnames(mydata) <- c("S1", "C1", "S2", "C2", "S3", "C3", "S4", "C4", "S5", "C5", "CLASS")
     
-    class_probability = reactive ({ mydata %>%
+    class_probability <- reactive ({ mydata %>%
         group_by(CLASS) %>%
         summarise(n = n()) %>%
         mutate(freq = round(n / sum(n), 6))%>%
@@ -53,5 +52,25 @@ shinyServer(function(input, output) {
             theme_void()
     })
     
+    cardValue <- round(colMeans(mydata), 2)
+    
+    cardValue <- data.frame(cardNumber = as.factor(c(1, 2, 3, 4, 5)), value = cardValue[c("C1", "C2", "C3", "C4", "C5")])
+    
+    output$cardValue <- renderPlot({
+        ggplot(cardValue, aes(x = cardNumber, y = value, fill = cardNumber)) +
+            geom_bar(stat = "identity", color = "white", width=0.8) +
+            geom_text(aes(label=value), vjust=1.6, color="white", size=3.5)
+    })
+    
+    suit <- c(mydata$S1, mydata$S2, mydata$S3, mydata$S4, mydata$S5)
+    
+    suitsCount <- as.data.frame(table(suit))
+    suitsCount$suit <- as.factor(c("Hearts", "Spades", "Diamonds", "Clubs"))
+    
+    output$suitsCount <- renderPlot({
+        ggplot(suitsCount, aes(x = suit, y = Freq, fill = suit)) +
+            geom_bar(stat = "identity", color = "white", width=0.8) +
+            geom_text(aes(label=Freq), vjust=1.6, color="white", size=3.5)
+    })
 
 })

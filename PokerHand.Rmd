@@ -64,6 +64,9 @@ ggplot(class_probability, aes(x = "", y = freq, fill = CLASS)) +
 ```
 
 ```{r}
+cardValue = colMeans(mydata)
+rbind(mydata$S1, mydata$S2)
+mydata$S1
 ```
 
 
