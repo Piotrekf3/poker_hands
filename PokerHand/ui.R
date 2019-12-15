@@ -17,7 +17,8 @@ shinyUI(dashboardPage(
         sidebarMenu(
             menuItem("Class probability", tabName = "classProbability", icon = icon("chart-pie")),
             menuItem("Card value", tabName = "cardValue", icon = icon("draft2digital")),
-            menuItem("SuitCount", tabName = "suitCount", icon = icon("heart"))
+            menuItem("Suit count", tabName = "suitCount", icon = icon("heart")),
+            menuItem("First card", tabName = "firstCard", icon = icon("heart"))
             
         )
     ),
@@ -66,6 +67,14 @@ shinyUI(dashboardPage(
                     ),
                     fluidRow(
                         box(width = 12, plotOutput("suitsCount", height = 550))
+                    )
+            ),
+            tabItem(tabName = "firstCard",
+                    fluidRow(
+                        box(width = 12, h1("First card"))
+                    ),
+                    fluidRow(
+                        box(width = 12, plotOutput("firstCardScatter", height = 550))
                     )
             )
         )

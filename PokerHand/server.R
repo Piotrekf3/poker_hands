@@ -72,5 +72,8 @@ shinyServer(function(input, output) {
             geom_bar(stat = "identity", color = "white", width=0.8) +
             geom_text(aes(label=Freq), vjust=1.6, color="white", size=3.5)
     })
-
+    
+    output$firstCardScatter <- renderPlot({
+        ggplot(mydata, aes(x=C1, y=S1)) + geom_point()
+    })
 })
